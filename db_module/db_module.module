@@ -1,0 +1,53 @@
+<?php
+use Drupal\Core\Database\Database;
+function db_module_install() {
+    // Use schema API to create database table.
+    db_module_schema('db_module');
+    }
+
+    function db_module_schema(){
+        $schema['a_student_details'] = [
+            'fields' => [
+                'id' => [
+                    'type' => 'serial',
+                    'not null' => True,
+                ],
+                'name' => [
+                    'type' => 'varchar',
+                    'length' => 30,
+                ],
+                'roll' => [
+                    'type' => 'int',
+                ],
+                'age' => [
+                    'type' => 'int',
+                ],
+                'date' => [
+                    'mysql_type' => 'date',
+                ],
+                
+            ],
+            'primary key' => ['id'],
+        ];
+        return $schema;
+    }
+
+    // function db_module_update() {
+    //     dump('hi');die;
+    //     // For non-batch updates, the signature can simply be:
+    //     // function hook_update_N() {
+    //     // Example function body for adding a field to a database table, which does
+    //     // not require a batch operation:
+    //     $spec = [
+    //       'type' => 'varchar',
+    //       'description' => "New Col",
+    //       'length' => 20,
+    //       'not null' => FALSE,
+    //     ];
+    //     $schema = Database::getConnection()
+    //       ->schema();
+    //     $schema
+    //       ->addField('a_student_details', 'newcol', $spec);
+    //   return $schema;
+    //   }
+      

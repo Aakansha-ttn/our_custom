@@ -1,0 +1,34 @@
+custom_form.CustomForm:
+  path: '/submit-application'
+  defaults:
+    _form: '\Drupal\custom_form\Form\CustomForm'
+    _title: 'please fill details'
+  requirements:
+    _permission: 'access content'
+
+
+custom_form.CustomFormController:
+  path: '/list-application'
+  defaults:
+    _controller: '\Drupal\custom_form\Controller\CustomFormController::showdata'
+    _title: 'Display'
+  requirements:
+    _permission: 'access content'
+
+custom_form.Delete:
+  path: '/delete/{id}'
+  defaults:
+    _controller: '\Drupal\custom_form\Controller\CustomFormController::deletedata'
+    _title: 'Delete'
+  requirements:
+    _permission: 'access content'
+   
+
+custom_form.edit_form:
+  path: '/edit/{id}'
+  defaults:
+    _form: 'Drupal\custom_form\Form\EditForm'
+    _title: 'Edit'
+  requirements:
+    _permission: 'access content'
+   

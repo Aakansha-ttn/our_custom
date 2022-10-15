@@ -1,0 +1,185 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Database\Database;
+// function new_form_feild_insert(&$form, FormStateInterface $form_state){
+//     dump("hi");die;
+// }
+
+
+function new_form_install() {
+    // Use schema API to create database table.
+    new_form_schema('new_form');
+    }
+
+    function new_form_schema(){
+        $schema['node_table'] = [
+            'fields' => [
+                'nid' => [
+                    'type' => 'int',
+                ], 
+                'id' => [
+                    'type' => 'serial',
+                    'not null' => True,
+                ],
+                'title' => [
+                    'type' => 'varchar',
+                    'length' => 30,
+                ],
+                'description' => [
+                    'type' => 'varchar',
+                    'length' => 30,
+                ],
+                'created' => [
+                    'type' => 'int',
+                ],
+                'updated' => [
+                    'type' => 'int',
+                ],
+               
+            ],
+            'primary key' => ['id'],
+        ];
+        return $schema;
+    }
+/**
+ * Add newcol field to {mytable1} table.
+ */
+
+// function new_form_update_9003() {
+  
+//     $ret = [];
+//   $con = Database::getConnection();
+//   $spec = [
+//     'type' => 'text',
+//     'size' => 'tiny',
+//   ];
+//   $ret[] = $con->schema()->addField('node_table', 'new', $spec);
+//   return $ret; 
+// }
+
+function new_form_update_9008() {
+    $query= [];
+    $con = Database::getConnection();
+    $feild = [
+        'type' => 'varchar',
+        'length' => 250,
+      ];
+      $query[] = $con->schema()->changeField('node_table', 'description', 'description', $feild);
+      return $query; 
+    }
+
+
+
+
+
+function new_form_views_data() {
+    $data = array();
+    $data['node_table'] = array();
+    $data['node_table']['table'] = array();
+    $data['node_table']['table']['group'] = t('Example table');
+    $data['node_table']['table']['provider'] = 'new_form';
+    $data['node_table']['nid'] = array(
+        'title' => t('Example content'),
+        'help' => t('Relate example content to the node content'),
+        // 'relationship' => array(
+        //     'base' => 'node_field_data',
+        //     // Database field name in the other table to join on.
+        //     'base field' => 'nid',
+        //     // ID of relationship handler plugin to use.
+        //     'id' => 'standard',
+        //     // Default label for relationship in the UI.
+            'label' => t('Example node'),
+        );
+        // );
+
+
+    }
+
+
+
+
+
+
+
+
+function new_form_node_insert(EntityInterface $entity)
+{
+    $current_user = \Drupal::currentUser();
+    $user_roles = $current_user->getRoles();
+    if (in_array("authenticated", $user_roles)) {
+        if ($entity->getEntityTypeId() == 'node' && $entity->getType() == 'article') {
+            //   dump($entity->created->value);die;
+            $insert = \Drupal::database()->insert('node_table')
+                ->fields([
+                    'title' => $entity->title->value,
+                    'nid' => $entity->nid->value,
+                    'description' => $entity->body->value,
+                    'created' =>  $entity->created->value,
+                    'updated' =>  $entity->changed->value
+                ]);
+            $insert->execute();
+        }
+    }
+}
+
+
+function new_form_node_delete(EntityInterface $entity)
+{
+    // dump("hi");die;
+    if ($entity->getEntityTypeId() == 'node' && $entity->getType() == 'article') {
+        \Drupal::database()
+            ->delete('node_table')
+            ->condition('nid', $entity->nid->value)
+            ->execute();
+    }
+}
+
+function new_form_node_update(Drupal\Core\Entity\EntityInterface $entity)
+{
+  if ($entity->getEntityTypeId() == 'node' && $entity->getType() == 'article') {
+    $insert = \Drupal::database()->update('node_table')
+      ->fields([
+        'title' => $entity->title->value,
+        'nid' => $entity->nid->value,
+        'description' => $entity->body->value,
+        'created' =>  $entity->created->value,
+        'updated' =>   $entity->changed->value,
+      ])->condition('nid', $entity->nid->value);
+    $insert->execute();
+  }
+}
+
+function new_form_form_alter(&$form, FormStateInterface $form_state, $form_id)
+{
+
+    if ($form_id == 'new_form') {
+        $form['student_rollno']['#prefix'] = '<div class="hi">';
+        $form['student_rollno']['#suffix'] = '</div>';
+        $form['student_dob']['#default_value'] = date('Y-m-d');
+        unset($form['options']['#options']['key1']);
+        $form['options']['#default_value'] = ['key2', 'key3'];
+        $form['positions']['#default_value'] = 3;
+        $form['subjects']['#default_value'] = [3];
+        $arr = ['student_name', 'student_rollno', 'student_mail',];
+        foreach ($arr as $key) {
+            // dump($key);
+
+            $form[$key]['#attributes']['placeholder'] = FALSE;
+        }
+        function new_form_validate(&$form, FormStateInterface $form_state)
+        {
+            if (preg_match('~[0-9]+~', ($form_state->getValue('student_name')))) {
+                $form_state->setErrorByName('student_name', t('Please enter a valid Name'));
+            }
+
+            if (!is_numeric($form_state->getValue('student_rollno'))) {
+                $form_state->setErrorByName('student_rollno', t('Please enter a valid Number'));
+            }
+        }
+    }
+    // kint($form);die;
+    $form['#validate'][] = 'new_form_validate';
+}
+    // die;

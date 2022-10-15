@@ -1,0 +1,5 @@
+name: Example_events
+type: module
+description: Example module for Event handling.
+core_version_requirement: ^8 || ^9
+package: Examples

@@ -1,0 +1,17 @@
+<table>
+    <tr>
+        {% for i in header %}
+            <th>{{i}}</th>
+        {% endfor %}
+    </tr>
+    {% for i in row %}
+    <tr>
+        {% for j in i %}
+            <td>{{j}}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+<button type="submit" class="registerbtn"><a href="/drupal_cms/drupal9/web/submit-application" target="_blank">Register</a></button>

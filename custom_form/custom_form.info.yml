@@ -1,0 +1,4 @@
+name: Custom Form
+description: This is the form to fill details of candidate.
+type: module
+core_version_requirement: ^8 || ^9

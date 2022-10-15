@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Implements hook_theme()
+ */
+
+/**
+ *
+ */
+function welcome_module_theme() {
+  return [
+    'mytheme' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+    ],
+  ];
+}

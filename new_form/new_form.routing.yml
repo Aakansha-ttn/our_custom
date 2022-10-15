@@ -1,0 +1,37 @@
+new_form.NewForm:
+  path: '/newform'
+  defaults:
+    _form: '\Drupal\new_form\Form\NewForm'
+    _title: 'please fill details'
+  requirements:
+    _permission: 'access content'
+
+
+
+new_form.NewFormController:
+  path: '/listing'
+  defaults:
+    _controller: '\Drupal\new_form\Controller\NewFormController::showdata'
+    _title: 'Student List'
+  requirements:
+    _permission: 'access content'
+
+
+
+new_form.Delete:
+  path: '/delete-row/{id}'
+  defaults:
+    _controller: '\Drupal\new_form\Controller\NewFormController::deletedata'
+    _title: 'Delete'
+  requirements:
+    _permission: 'access content'
+
+new_form.edit_form:
+  path: '/edit-form/{id}'
+  defaults:
+    _form: 'Drupal\new_form\Form\ForEdit'
+    _title: 'Edit'
+  requirements:
+    _permission: 'access content'
+   
+   
