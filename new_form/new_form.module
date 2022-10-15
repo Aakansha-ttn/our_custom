@@ -8,7 +8,7 @@ use Drupal\Core\Database\Database;
 // }
 
 // function new_form_update_9003() {
-  
+
 //     $ret = [];
 //   $con = Database::getConnection();
 //   $spec = [
@@ -19,43 +19,90 @@ use Drupal\Core\Database\Database;
 //   return $ret; 
 // }
 
-function new_form_update_9008() {
-    $query= [];
+function new_form_update_9008()
+{
+    $query = [];
     $con = Database::getConnection();
     $feild = [
         'type' => 'varchar',
         'length' => 250,
-      ];
-      $query[] = $con->schema()->changeField('node_table', 'description', 'description', $feild);
-      return $query; 
-    }
+    ];
+    $query[] = $con->schema()->changeField('node_table', 'description', 'description', $feild);
+    return $query;
+}
 
 
 
 
 
-function new_form_views_data() {
-    $data = array();
+function new_form_views_data()
+{
+    $data = [];
     $data['node_table'] = array();
     $data['node_table']['table'] = array();
-    $data['node_table']['table']['group'] = t('Example table');
+    $data['node_table']['table']['group'] = t('Node table');
     $data['node_table']['table']['provider'] = 'new_form';
+    $data['node_table']['table']['base'] = [
+        // Identifier (primary) field in this table for Views.
+        'field' => 'id',
+        // Label in the UI.
+        'title' => t('Node Table Data'),
+        // Longer description in the UI. Required.
+        'help' => t('Node table in views.'),
+        'weight' => -10,
+    ];
     $data['node_table']['nid'] = array(
-        'title' => t('Example content'),
-        'help' => t('Relate example content to the node content'),
-        // 'relationship' => array(
-        //     'base' => 'node_field_data',
-        //     // Database field name in the other table to join on.
-        //     'base field' => 'nid',
-        //     // ID of relationship handler plugin to use.
-        //     'id' => 'standard',
-        //     // Default label for relationship in the UI.
-            'label' => t('Example node'),
-        );
-        // );
-
-
-    }
+        'title' => t('Nid'),
+        'help' => t('This is nid of node '),
+        'field' => [
+            'id' => 'numeric'
+        ]
+    );
+    $data['node_table']['id'] = array(
+        'title' => t('id'),
+        'help' => t('This is id of node table'),
+        'field' => [
+            'id' => 'numeric'
+        ]
+    );
+    $data['node_table']['title'] = array(
+        'title' => t('title'),
+        'help' => t('This is title of node '),
+        'field' => [
+            'id' => 'standard'
+        ]
+    );
+    $data['node_table']['description'] = array(
+        'title' => t('description'),
+        'help' => t('This is description of node '),
+        'field' => [
+            'id' => 'standard'
+        ]
+    );
+    $data['node_table']['title'] = array(
+        'title' => t('title'),
+        'help' => t('This is title of node '),
+        'field' => [
+            'id' => 'standard'
+        ]
+    );
+    $data['node_table']['created'] = array(
+        'title' => t('created'),
+        'help' => t('This is created date of node '),
+        'field' => [
+            'id' => 'date'
+        ]
+    );
+    $data['node_table']['updated'] = array(
+        'title' => t('updated'),
+        'help' => t('This is last updated date of node '),
+        'field' => [
+            'id' => 'standard'
+        ]
+    );
+    // );
+    return $data;
+}
 
 
 
@@ -98,17 +145,17 @@ function new_form_node_delete(EntityInterface $entity)
 
 function new_form_node_update(Drupal\Core\Entity\EntityInterface $entity)
 {
-  if ($entity->getEntityTypeId() == 'node' && $entity->getType() == 'article') {
-    $insert = \Drupal::database()->update('node_table')
-      ->fields([
-        'title' => $entity->title->value,
-        'nid' => $entity->nid->value,
-        'description' => $entity->body->value,
-        'created' =>  $entity->created->value,
-        'updated' =>   $entity->changed->value,
-      ])->condition('nid', $entity->nid->value);
-    $insert->execute();
-  }
+    if ($entity->getEntityTypeId() == 'node' && $entity->getType() == 'article') {
+        $insert = \Drupal::database()->update('node_table')
+            ->fields([
+                'title' => $entity->title->value,
+                'nid' => $entity->nid->value,
+                'description' => $entity->body->value,
+                'created' =>  $entity->created->value,
+                'updated' =>   $entity->changed->value,
+            ])->condition('nid', $entity->nid->value);
+        $insert->execute();
+    }
 }
 
 function new_form_form_alter(&$form, FormStateInterface $form_state, $form_id)
