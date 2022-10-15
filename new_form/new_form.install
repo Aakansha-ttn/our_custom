@@ -1,0 +1,31 @@
+<?php
+function new_form_schema(){
+        $schema['node_table'] = [
+            'fields' => [
+                'nid' => [
+                    'type' => 'int',
+                ], 
+                'id' => [
+                    'type' => 'serial',
+                    'not null' => True,
+                ],
+                'title' => [
+                    'type' => 'varchar',
+                    'length' => 30,
+                ],
+                'description' => [
+                    'type' => 'varchar',
+                    'length' => 30,
+                ],
+                'created' => [
+                    'type' => 'int',
+                ],
+                'updated' => [
+                    'type' => 'int',
+                ],
+               
+            ],
+            'primary key' => ['id'],
+        ];
+        return $schema;
+    }
