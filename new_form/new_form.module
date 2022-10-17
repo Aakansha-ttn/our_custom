@@ -33,6 +33,9 @@ function new_form_views_data()
         'field' => [
             'id' => 'numeric'
         ],
+        'filter' => [
+            'id' => 'numeric',
+          ],
         'relationship' => array(
             'title' => 'body',
             'help' => 'body of node',
