@@ -32,7 +32,14 @@ function new_form_views_data()
         'help' => t('This is id of node table'),
         'field' => [
             'id' => 'numeric'
-        ]
+        ],
+        'relationship' => array(
+            'title' => 'body',
+            'help' => 'body of node',
+            'base' => 'node_field_data',
+            'field' => 'nid',
+            'id' => 'standard',
+          ),
     );
     $data['node_table']['title'] = array(
         'title' => t('title'),
