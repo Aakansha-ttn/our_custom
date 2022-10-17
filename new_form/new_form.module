@@ -25,7 +25,10 @@ function new_form_views_data()
         'help' => t('This is nid of node '),
         'field' => [
             'id' => 'numeric'
-        ]
+        ],
+        'filter' => [
+            'id' => 'numeric',
+        ],
     );
     $data['node_table']['id'] = array(
         'title' => t('id'),
@@ -33,20 +36,26 @@ function new_form_views_data()
         'field' => [
             'id' => 'numeric'
         ],
+        'filter' => [
+            'id' => 'numeric',
+        ],
         'relationship' => array(
             'title' => 'body',
             'help' => 'body of node',
             'base' => 'node_field_data',
             'field' => 'nid',
             'id' => 'standard',
-          ),
+        ),
     );
     $data['node_table']['title'] = array(
         'title' => t('title'),
         'help' => t('This is title of node '),
         'field' => [
             'id' => 'standard'
-        ]
+        ],
+        'filter' => [
+            'id' => 'string',
+        ],
     );
     $data['node_table']['description'] = array(
         'title' => t('description'),
