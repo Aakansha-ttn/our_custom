@@ -3,42 +3,11 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Database\Database;
-// function new_form_feild_insert(&$form, FormStateInterface $form_state){
-//     dump("hi");die;
-// }
-
-// function new_form_update_9003() {
-
-//     $ret = [];
-//   $con = Database::getConnection();
-//   $spec = [
-//     'type' => 'text',
-//     'size' => 'tiny',
-//   ];
-//   $ret[] = $con->schema()->addField('node_table', 'new', $spec);
-//   return $ret; 
-// }
-
-function new_form_update_9008()
-{
-    $query = [];
-    $con = Database::getConnection();
-    $feild = [
-        'type' => 'varchar',
-        'length' => 250,
-    ];
-    $query[] = $con->schema()->changeField('node_table', 'description', 'description', $feild);
-    return $query;
-}
-
-
-
 
 
 function new_form_views_data()
 {
     $data = [];
-    $data['node_table'] = array();
     $data['node_table']['table'] = array();
     $data['node_table']['table']['group'] = t('Node table');
     $data['node_table']['table']['provider'] = 'new_form';
@@ -122,7 +91,7 @@ function new_form_node_insert(EntityInterface $entity)
                 ->fields([
                     'title' => $entity->title->value,
                     'nid' => $entity->nid->value,
-                    'description' => $entity->body->value,
+                    'description' => $entity->field_description->value,
                     'created' =>  $entity->created->value,
                     'updated' =>  $entity->changed->value
                 ]);
@@ -150,7 +119,7 @@ function new_form_node_update(Drupal\Core\Entity\EntityInterface $entity)
             ->fields([
                 'title' => $entity->title->value,
                 'nid' => $entity->nid->value,
-                'description' => $entity->body->value,
+                'description' => $entity->field_description->value,
                 'created' =>  $entity->created->value,
                 'updated' =>   $entity->changed->value,
             ])->condition('nid', $entity->nid->value);

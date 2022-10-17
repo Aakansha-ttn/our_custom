@@ -29,3 +29,27 @@ function new_form_schema(){
         ];
         return $schema;
     }
+    // function new_form_update_9008()
+    // {
+    //     $query = [];
+    //     $con = Database::getConnection();
+    //     $feild = [
+    //         'type' => 'varchar',
+    //         'length' => 250,
+    //     ];
+    //     $query[] = $con->schema()->changeField('node_table', 'description', 'description', $feild);
+    //     return $query;
+    // }
+
+
+// function new_form_update_9003() {
+
+//     $ret = [];
+//   $con = Database::getConnection();
+//   $spec = [
+//     'type' => 'text',
+//     'size' => 'tiny',
+//   ];
+//   $ret[] = $con->schema()->addField('node_table', 'new', $spec);
+//   return $ret; 
+// }
