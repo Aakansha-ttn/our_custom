@@ -76,7 +76,10 @@ function new_form_views_data()
         'help' => t('This is created date of node '),
         'field' => [
             'id' => 'date'
-        ]
+        ],
+        'sort' => [
+            'id' => 'standard',
+          ],
     );
     $data['node_table']['updated'] = array(
         'title' => t('updated'),
