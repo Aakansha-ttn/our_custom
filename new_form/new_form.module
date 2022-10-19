@@ -3,6 +3,8 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Database\Database;
+use Drupal\views\ViewExecutable;
+use Drupal\views\Plugin\views\query\QueryPluginBase;
 
 
 function new_form_views_data()
@@ -52,10 +54,7 @@ function new_form_views_data()
         'help' => t('This is title of node '),
         'field' => [
             'id' => 'standard'
-        ],
-        'filter' => [
-            'id' => 'string',
-        ],
+        ]
     );
     $data['node_table']['description'] = array(
         'title' => t('description'),
@@ -76,13 +75,13 @@ function new_form_views_data()
         'help' => t('This is created date of node '),
         'field' => [
             'id' => 'date'
-        ]
+        ],
     );
     $data['node_table']['updated'] = array(
         'title' => t('updated'),
         'help' => t('This is last updated date of node '),
         'field' => [
-            'id' => 'standard'
+            'id' => 'date'
         ]
     );
     // );
@@ -90,9 +89,23 @@ function new_form_views_data()
 }
 
 
-
-
-
+function new_form_views_query_alter(ViewExecutable $view, QueryPluginBase $query)
+{
+//  kint($view->id());die;
+  $userId = \Drupal::currentUser()->id();
+  if ($view->id() == 'node_table') {
+    $query->where[] = [
+      'conditions' => [
+       [
+        'field' => 'node_table.uid',
+        'value' => $userId,
+        'operator' => '=',
+       ],
+      ],
+      // 'type' => 'AND',
+    ];
+  }
+}
 
 
 
@@ -109,7 +122,8 @@ function new_form_node_insert(EntityInterface $entity)
                     'nid' => $entity->nid->value,
                     'description' => $entity->field_description->value,
                     'created' =>  $entity->created->value,
-                    'updated' =>  $entity->changed->value
+                    'updated' =>  $entity->changed->value,
+                    'uid' => $entity->getOwnerId(),
                 ]);
             $insert->execute();
         }
@@ -138,6 +152,7 @@ function new_form_node_update(Drupal\Core\Entity\EntityInterface $entity)
                 'description' => $entity->field_description->value,
                 'created' =>  $entity->created->value,
                 'updated' =>   $entity->changed->value,
+                'uid' => $entity->getOwnerId(),
             ])->condition('nid', $entity->nid->value);
         $insert->execute();
     }
