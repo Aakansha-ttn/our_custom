@@ -21,10 +21,10 @@ class DefaultTimezone extends BlockBase {
 public function build() {
 
     $system_date = \Drupal::config('system.date')->get('country.default');
-    $request_time = \Drupal::time()->getCurrentTime();
+    $request_time = date('d-m-Y h:i:s a',\Drupal::time()->getCurrentTime());
     
   return [
-    '#markup' => 'default time zone',
+    '#markup' => $system_date.'<br>'.$request_time,
     
     ];
    }
