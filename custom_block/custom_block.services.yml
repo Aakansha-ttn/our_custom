@@ -1,0 +1,4 @@
+services:
+  country_timezone:
+    class: Drupal\custom_block\CountryTime
+    arguments: ['@config.factory', '@datetime.time']

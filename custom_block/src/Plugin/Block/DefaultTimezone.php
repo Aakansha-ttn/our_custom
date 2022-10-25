@@ -3,6 +3,9 @@
 namespace Drupal\custom_block\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\custom_block\CountryTime;
 
 /**
  * Provides a 'CustomBlock' block.
@@ -12,22 +15,36 @@ use Drupal\Core\Block\BlockBase;
  *  admin_label = @Translation("Defaulttimezone"),
  * )
  */
-class DefaultTimezone extends BlockBase {
-      
-  /**
-   * {@inheritdoc}
-   */
+class DefaultTimezone extends BlockBase implements ContainerFactoryPluginInterface
+{
 
-public function build() {
+  protected $countryTime;
 
-    $req_country = \Drupal::service('country_timezone')->countryName();
-    $request_time = \Drupal::service('country_timezone')->timeZone();
-    
-  return [
-    '#theme' => 'time_zone',
-   '#country' => $req_country,
-   '#time' => $request_time,
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, CountryTime $country_time)
+  {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->countryTime = $country_time;
+  }
+
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition)
+  {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('country_timezone'),
+    );
+  }
+  public function build()
+  {
+
+    $req_country = $this->countryTime->countryName();
+    $request_time = $this->countryTime->timeZone();
+
+    return [
+      '#theme' => 'time_zone',
+      '#country' => $req_country,
+      '#time' => $request_time,
     ];
-   }
-
+  }
 }

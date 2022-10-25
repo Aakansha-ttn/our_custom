@@ -102,7 +102,7 @@ function new_form_views_query_alter(ViewExecutable $view, QueryPluginBase $query
         'operator' => '=',
        ],
       ],
-      // 'type' => 'AND',
+      
     ];
   }
 }
