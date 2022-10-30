@@ -1,0 +1,8 @@
+<?php
+/**
+ * This hook help us to add css.
+ */
+function css_module_page_attachments(array &$page) {
+    // dump($page);die;
+    $page['#attached']['library'][] = 'css_module/custom_css';
+}

@@ -1,0 +1,4 @@
+name: Css module
+type: module
+description: 'module to attack css'
+core_version_requirement: ^8 || ^9
