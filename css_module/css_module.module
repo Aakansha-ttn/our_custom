@@ -4,5 +4,9 @@
  */
 function css_module_page_attachments(array &$page) {
     // dump($page);die;
+    $current_path = \Drupal::service('path.current')->getPath();
+    // kint($current_path);die;
+    if($current_path == '/listing') {
     $page['#attached']['library'][] = 'css_module/custom_css';
+    }
 }

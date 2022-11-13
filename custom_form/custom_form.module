@@ -112,4 +112,47 @@ function custom_form_views_pre_render(ViewExecutable $view) {
   }
 }
 
-  
+ 
+
+// function custom_form_preprocess_student(&$variables, $hook) {
+//   kint($variables);die;
+// }
+
+// function custom_form_preprocess_paragraph(&$vars) {
+//   dump($vars);die;
+// }
+
+// function custom_form_form_node_form_alter(&$form, \Drupal\Core\Form\FormStateInterface  $form_state, $form_id) { 
+//   $node = $form_state->getFormObject()->getEntity();
+//   kint($node);die;
+//   if ($node->getType() != 'institute') {
+//   }
+//   }
+
+function custom_form_field_widget_paragraphs_form_alter(&$element, &$form_state, $context) {
+  if ($element['#paragraph_type'] == 'student') { 
+    // $student = $form_state->getValue('field_name');
+    // kint($element);
+    // $element['subform']['field_image']['widget'][0]['#prefix'] = '<div class="mydiv">';
+    // $element['subform']['field_image']['widget'][0]['#suffix'] = '</div>';  
+    // $element['subform']['field_image']['#attributes']['class'][] = 'myclass';
+    $element['subform']['field_name']['widget'][0]['#default_value'] = "test value";
+    // $element['#prefix'] = '<div id="edit-student-page">';
+    // $element['#suffix'] = '</div>'; 
+    // kint($element);die;
+    // kint($context);die;
+  }
+}
+
+function custom_form_preprocess_paragraph(&$vars) {
+  // kint($vars);die;
+  $vars['content']['field_image'][0]['#prefix'] = '<div class="mydiv">';
+     $vars['content']['field_image'][0]['#suffix'] = '</div>';
+ }
+
+// function custom_form_set_defaults($entity_type, $bundle) {
+//   kint($entity_type, $bundle);die;
+// }
+// function field_name_set_defaults($info = array()) {
+//   kint("hi");die;
+// }

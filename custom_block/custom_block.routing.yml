@@ -1,0 +1,7 @@
+custom_block.ConfigForm:
+  path: '/config-form'
+  defaults:
+    _form: '\Drupal\custom_block\Form\ConfigForm'
+    _title: 'Enter Config Details'
+  requirements:
+    _permission: 'access content'
