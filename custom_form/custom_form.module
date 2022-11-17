@@ -156,3 +156,12 @@ function custom_form_preprocess_paragraph(&$vars) {
 // function field_name_set_defaults($info = array()) {
 //   kint("hi");die;
 // }
+
+// function custom_form_entity_view_mode_alter(&$view_mode, $entity) {
+//   kint("hi");die;
+// }
+
+
+// function custom_form_entity_view_mode_alter(&$view_mode, Drupal\Core\Entity\EntityInterface $entity, $context) {
+// kint($context);die;
+// }
